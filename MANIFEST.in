@@ -1,0 +1,2 @@
+include requirements.txtinclude versioneer.py
+include src/bowdata/test/flask/_version.py
