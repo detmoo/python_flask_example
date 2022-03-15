@@ -5,14 +5,12 @@ trigger:
         include:
             - "*"
 
-
 resources:
     repositories:
         - repository: bowdata-toolkits
           type: git
-          name: detmoo/bowdata.toolkits.azure-pipelines
+          name: toolkits/bowdata.toolkits.azure-pipelines
           ref: refs/heads/master
-
 
 parameters:
   - name: workingDirectory
@@ -29,3 +27,10 @@ parameters:
       - WARNING
       - ERROR
       - CRITICAL
+
+stages:
+  - template: /python/pipelines/package-pipeline.yaml@bowdata-toolkits
+    parameters:
+      preRelease: ${{parameters.preRelease}}
+      logLevel: ${{parameters.logLevel}}
+      workingDirectory: ${{parameters.workingDirectory}}

@@ -1,0 +1,1 @@
+FLASK_APP=bowdata_test_flask.py
