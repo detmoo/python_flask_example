@@ -11,6 +11,11 @@ from bowdata.test.flask.config import Config
 
 
 def create_app(config_class=Config):
+    """Flask Application Factory Pattern.
+
+    Args:
+        config_class (Config): object whose attributes provide parameters for the Flask app instance.
+    """
     app = Flask(__name__)
     app.config.from_object(config_class)
 
