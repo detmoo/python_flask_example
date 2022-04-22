@@ -16,7 +16,7 @@ parameters:
   - name: workingDirectory
     default: $(Build.SourcesDirectory)
   - name: preRelease
-    default: "a"
+    default: "-a"
   - name: logLevel
     default: DEBUG
     type: string
