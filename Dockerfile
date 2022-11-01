@@ -1,17 +1,18 @@
 FROM python:3.9-slim
 
 RUN useradd bowdata-test-flask
-USER bowdata-test-flask
 
 WORKDIR /home/bowdata-test-flask
 
-RUN chown -R bowdata-test-flask:bowdata-test-flask ./
 RUN mkdir -p .ci
 COPY .ci/install.py .ci/install.py
 COPY requirements.txt requirements.txt
 COPY /src/bowdata/test/flask /src/bowdata/test/flask
 COPY bowdata-test-flask.py boot.sh ./
 RUN chmod +x boot.sh
+
+RUN chown -R bowdata-test-flask:bowdata-test-flask ./
+USER bowdata-test-flask
 
 RUN pip install -U pip
 RUN pip config --site set global.index-url https://pypi.org/simple
