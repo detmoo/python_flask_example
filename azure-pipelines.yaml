@@ -27,6 +27,30 @@ parameters:
       - WARNING
       - ERROR
       - CRITICAL
+  - name: azureDockerStageCondition
+    default: succeeded()
+  - name: azureDockerStageDependsOn
+    type: object
+    default: [Build]
+# Parameter Sets
+  - name: _ignore_params
+    type: object
+    default: []
+  - name: _general_params
+    type: object
+    default:
+      - logLevel
+      - workingDirectory
+  - name: _azure_docker_stage_params
+    type: object
+    default:
+      - azureDockerStageCondition
+      - azureDockerStageDependsOn
+      - dockerhubServiceConnection
+      - containerPort
+      - hostPort
+      - containerRuntimeVariables
+      - dockerhubAccount
 
 stages:
   - template: /python/pipelines/package-pipeline.yaml@bowdata-toolkits
@@ -34,3 +58,10 @@ stages:
       preRelease: ${{parameters.preRelease}}
       logLevel: ${{parameters.logLevel}}
       workingDirectory: ${{parameters.workingDirectory}}
+      integrationTestStages:
+        # docker image build, test & push stage on Azure agent
+        - template: /containers/stages/azure-docker-stage.yaml
+          parameters:
+            ${{ each pair in parameters }}:
+              ${{if and(or(containsValue(parameters._azure_docker_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
+                ${{pair.key}}: ${{pair.value}}
