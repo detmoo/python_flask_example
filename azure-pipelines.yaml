@@ -60,7 +60,7 @@ stages:
       workingDirectory: ${{parameters.workingDirectory}}
       integrationTestStages:
         # docker image build, test & push stage on Azure agent
-        - template: /containers/stages/azure-docker-stage.yaml
+        - template: /containers/stages/azure-docker-stage.yaml@bowdata-toolkits
           parameters:
             ${{ each pair in parameters }}:
               ${{if and(or(containsValue(parameters._azure_docker_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
