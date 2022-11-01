@@ -1,6 +1,7 @@
 FROM python:3.9-slim
 
 RUN useradd bowdatatestuser
+USER bowdatatestuser
 
 WORKDIR /home/bowdata-test-flask
 
@@ -12,8 +13,9 @@ COPY bowdata-test-flask.py boot.sh ./
 
 RUN chmod +x boot.sh
 RUN chown -R bowdatatestuser:bowdatatestuser ./
-USER bowdatatestuser
 
+RUN pip config --site set global.index-url https://pypi.org/simple
+RUN pip config --site set global.extra-index-url {env:PIP_EXTRA_INDEX_URL:https://pkgs.dev.azure.com/BowData/_packaging/BowData/pypi/simple/}
 RUN python -m venv .venv
 RUN python .ci/install.py requirements.txt
 RUN .venv/bin/pip install gunicorn
