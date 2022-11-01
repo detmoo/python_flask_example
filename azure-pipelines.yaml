@@ -69,6 +69,7 @@ parameters:
 stages:
   - template: /python/pipelines/package-pipeline.yaml@bowdata-toolkits
     parameters:
+      versionStageDependsOn: ${{parameters.versionStageDependsOn}}
       preRelease: ${{parameters.preRelease}}
       logLevel: ${{parameters.logLevel}}
       workingDirectory: ${{parameters.workingDirectory}}
