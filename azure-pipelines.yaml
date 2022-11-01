@@ -29,9 +29,14 @@ parameters:
       - CRITICAL
   - name: azureDockerStageCondition
     default: succeeded()
+  - name: azureDockerStageName
+    default: AzureDockerStage
   - name: azureDockerStageDependsOn
     type: object
-    default: [Build]
+    default: ['Build']
+  - name: versionStageDependsOn
+    type: object
+    default: ['AzureDockerStage']
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
   - name: dockerhubAccount
@@ -52,6 +57,7 @@ parameters:
   - name: _azure_docker_stage_params
     type: object
     default:
+      - azureDockerStageName
       - azureDockerStageCondition
       - azureDockerStageDependsOn
       - dockerhubServiceConnection
