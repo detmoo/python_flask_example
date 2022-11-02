@@ -14,10 +14,10 @@ RUN chmod +x boot.sh
 RUN chown -R bowdata-test-flask:bowdata-test-flask ./
 USER bowdata-test-flask
 
-RUN ./local/bin/pip install -U pip
-RUN ./local/bin/pip config --site set global.index-url https://pypi.org/simple
-RUN ./local/bin/pip config --site set global.extra-index-url {env:PIP_EXTRA_INDEX_URL:https://pkgs.dev.azure.com/BowData/_packaging/BowData/pypi/simple/}
-RUN ./local/bin/python -m venv .venv
+RUN ./.local/bin/pip install -U pip
+RUN ./.local/bin/pip config --site set global.index-url https://pypi.org/simple
+RUN ./.local/bin/pip config --site set global.extra-index-url {env:PIP_EXTRA_INDEX_URL:https://pkgs.dev.azure.com/BowData/_packaging/BowData/pypi/simple/}
+RUN ./.local/bin/python -m venv .venv
 RUN .venv/bin/python .ci/install.py requirements.txt
 RUN .venv/bin/pip install gunicorn
 
