@@ -39,7 +39,7 @@ parameters:
     default: ['AzureDockerStage']
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
-  - name: dockerhubRegistry
+  - name: dockerhubRepository
     default: "edgeworks"
   - name: dockerhubAccount
     default: "bowdataDockerhub"
@@ -68,7 +68,7 @@ parameters:
       - hostPort
       - containerRuntimeVariables
       - dockerhubAccount
-      - dockerhubRegistry
+      - dockerhubRepository
 
 stages:
   - template: /python/pipelines/package-pipeline.yaml@bowdata-toolkits
