@@ -99,7 +99,7 @@ stages:
                 workingDirectory: ${{parameters.workingDirectory}}
 
               - script: |
-                  docker ps
+                  docker ps -a
                   sudo iptables -L -n
                   sudo netstat -tulpn
                 displayName: "netstat"
