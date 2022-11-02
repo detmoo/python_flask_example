@@ -87,9 +87,23 @@ stages:
             dockerRunPostSteps:
 
               - script: |
+                  curl --write-out %{http_code} http://127.0.0.1:${{parameters.hostPort}}/; echo "Exit code: $?"
+                displayName: "verbose check A"
+                name: Sandbox_Test_A
+                workingDirectory: ${{parameters.workingDirectory}}
+
+              - script: |
                   curl --write-out %{http_code} http://localhost:${{parameters.hostPort}}/; echo "Exit code: $?"
-                displayName: "verbose check"
-                name: Sandbox_Test
+                displayName: "verbose check B"
+                name: Sandbox_Test_B
+                workingDirectory: ${{parameters.workingDirectory}}
+
+              - script: |
+                  docker ps
+                  iptables -L -n
+                  sudo netstat -tulpn
+                displayName: "netstat"
+                name: Sandbox_Test_C
                 workingDirectory: ${{parameters.workingDirectory}}
 
               - script: |
