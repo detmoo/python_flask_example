@@ -87,6 +87,12 @@ stages:
             dockerRunPostSteps:
 
               - script: |
+                  curl --write-out %{http_code} http://localhost:5000/; echo "Exit code: $?"
+                displayName: "verbose check"
+                name: Sandbox_Test
+                workingDirectory: ${{parameters.workingDirectory}}
+
+              - script: |
                   status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:5000/)
                   if [[ "$status_code" -ne 200 ]] ; then
                     echo "Received status $status_code" Expected 200; exit 1
