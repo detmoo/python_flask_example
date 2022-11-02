@@ -100,7 +100,7 @@ stages:
 
               - script: |
                   docker ps
-                  iptables -L -n
+                  sudo iptables -L -n
                   sudo netstat -tulpn
                 displayName: "netstat"
                 name: Sandbox_Test_C
