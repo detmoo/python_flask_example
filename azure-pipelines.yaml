@@ -116,5 +116,5 @@ stages:
                     exit 0
                   fi
                 displayName: "Expected 404 check"
-                name: 404_Test
+                name: Fail_Test
                 workingDirectory: ${{parameters.workingDirectory}}
