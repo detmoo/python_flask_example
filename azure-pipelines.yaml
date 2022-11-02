@@ -68,6 +68,7 @@ parameters:
       - hostPort
       - containerRuntimeVariables
       - dockerhubAccount
+      - dockerhubRegistry
 
 stages:
   - template: /python/pipelines/package-pipeline.yaml@bowdata-toolkits
