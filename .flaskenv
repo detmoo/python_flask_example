@@ -1,1 +1,1 @@
-FLASK_APP=bowdata_test_flask.py
+FLASK_APP=bowdata-test-flask.py

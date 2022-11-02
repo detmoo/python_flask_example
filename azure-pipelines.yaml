@@ -39,6 +39,8 @@ parameters:
     default: ['AzureDockerStage']
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
+  - name: dockerhubRegistry
+    default: "edgeworks"
   - name: dockerhubAccount
     default: "bowdataDockerhub"
   - name: containerPort
@@ -48,7 +50,8 @@ parameters:
 # Parameter Sets
   - name: _ignore_params
     type: object
-    default: []
+    default:
+      - dockerRunPostSteps
   - name: _general_params
     type: object
     default:
@@ -80,3 +83,37 @@ stages:
             ${{ each pair in parameters }}:
               ${{if and(or(containsValue(parameters._azure_docker_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
                 ${{pair.key}}: ${{pair.value}}
+            dockerRunPostSteps:
+
+              - script: |
+                  status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:5000/)
+                  if [[ "$status_code" -ne 200 ]] ; then
+                    echo "Received status $status_code" Expected 200; exit 1
+                  else
+                    exit 0
+                  fi
+                displayName: "App endpoint check"
+                name: App_Test
+                workingDirectory: ${{parameters.workingDirectory}}
+
+              - script: |
+                  status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:5000/api/capital-of-ukraine)
+                  if [[ "$status_code" -ne 200 ]] ; then
+                    echo "Received status $status_code" Expected 200; exit 1
+                  else
+                    exit 0
+                  fi
+                displayName: "API endpoint check"
+                name: Api_Test
+                workingDirectory: ${{parameters.workingDirectory}}
+
+              - script: |
+                  status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:5000/api/this-does-not-exist)
+                  if [[ "$status_code" -ne 404 ]] ; then
+                    echo "Received status $status_code" Expected 404; exit 1
+                  else
+                    exit 0
+                  fi
+                displayName: "Expected 404 check"
+                name: 404_Test
+                workingDirectory: ${{parameters.workingDirectory}}
