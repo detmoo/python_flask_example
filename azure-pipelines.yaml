@@ -87,34 +87,14 @@ stages:
             dockerRunPostSteps:
 
               - script: |
-                  curl --write-out %{http_code} http://127.0.0.1:${{parameters.hostPort}}/; echo "Exit code: $?"
-                displayName: "verbose check A"
-                name: Sandbox_Test_A
-                workingDirectory: ${{parameters.workingDirectory}}
-
-              - script: |
-                  curl --write-out %{http_code} http://localhost:${{parameters.hostPort}}/; echo "Exit code: $?"
-                displayName: "verbose check B"
-                name: Sandbox_Test_B
-                workingDirectory: ${{parameters.workingDirectory}}
-
-              - script: |
-                  docker ps -a
-                  sudo iptables -L -n
-                  sudo netstat -tulpn
-                displayName: "netstat"
-                name: Sandbox_Test_C
-                workingDirectory: ${{parameters.workingDirectory}}
-
-              - script: |
                   status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:${{parameters.hostPort}}/)
                   if [[ "$status_code" -ne 200 ]] ; then
                     echo "Received status $status_code" Expected 200; exit 1
                   else
                     exit 0
                   fi
-                displayName: "App endpoint check"
-                name: App_Test
+                displayName: "Smoke Test: WebApp"
+                name: SmokeTest_App
                 workingDirectory: ${{parameters.workingDirectory}}
 
               - script: |
@@ -124,8 +104,8 @@ stages:
                   else
                     exit 0
                   fi
-                displayName: "API endpoint check"
-                name: Api_Test
+                displayName: "Smoke Test: API"
+                name: SmokeTest_Api
                 workingDirectory: ${{parameters.workingDirectory}}
 
               - script: |
@@ -135,6 +115,6 @@ stages:
                   else
                     exit 0
                   fi
-                displayName: "Expected 404 check"
-                name: Fail_Test
+                displayName: "Smoke Test: 404"
+                name: SmokeTest_404
                 workingDirectory: ${{parameters.workingDirectory}}

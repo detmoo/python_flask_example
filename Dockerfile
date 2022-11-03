@@ -4,18 +4,12 @@ RUN useradd bowdata.test.flask
 
 WORKDIR /home/bowdata.test.flask
 
-# RUN mkdir -p .ci
-# COPY .ci/install.py .ci/install.py
-# COPY requirements.txt requirements.txt
-# COPY /src/bowdata/test/flask /src/bowdata/test/flask
 COPY run.py boot.sh ./
 COPY ./dist ./dist
 RUN chmod +x boot.sh
 
-RUN /usr/local/bin/pip install -U pip
-# RUN /usr/local/bin/pip config --site set global.index-url https://pypi.org/simple
-# RUN /usr/local/bin/pip config --site set global.extra-index-url {env:PIP_EXTRA_INDEX_URL:https://pkgs.dev.azure.com/BowData/_packaging/BowData/pypi/simple/}
 RUN /usr/local/bin/python -m venv .venv
+RUN .venv/bin/pip install -U pip
 RUN .venv/bin/python -m pip install --find-links=./dist bowdata.test.flask
 RUN .venv/bin/pip install gunicorn
 
