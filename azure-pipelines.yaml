@@ -41,8 +41,8 @@ parameters:
     default: "bd-docker-hub-svc-connection"
   - name: dockerhubRepository
     default: "edgeworks"
-  - name: dockerhubAccount
-    default: "bowdataDockerhub"
+#  - name: dockerhubAccount
+#    default: "bowdataDockerhub"
   - name: containerPort
     default: 5000
   - name: hostPort
