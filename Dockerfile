@@ -4,10 +4,10 @@ RUN useradd bowdata-test-flask
 
 WORKDIR /home/bowdata-test-flask
 
-RUN mkdir -p .ci
-COPY .ci/install.py .ci/install.py
-COPY requirements.txt requirements.txt
-COPY /src/bowdata/test/flask /src/bowdata/test/flask
+# RUN mkdir -p .ci
+# COPY .ci/install.py .ci/install.py
+# COPY requirements.txt requirements.txt
+# COPY /src/bowdata/test/flask /src/bowdata/test/flask
 COPY bowdata-test-flask.py boot.sh ./
 COPY ./dist ./dist
 RUN chmod +x boot.sh
