@@ -1,3 +1,4 @@
+include boot.sh
 include requirements.txt
 include versioneer.py
 include src/bowdata/test/flask/_version.py
