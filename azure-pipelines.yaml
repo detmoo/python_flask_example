@@ -39,8 +39,8 @@ parameters:
     default: ['AzureDockerStage']
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
-  - name: dockerhubRepository
-    default: "edgeworks"
+  - name: dockerhubRepository  # this defaults to the same value as parameters.appName
+    default: $(Build.Repository.Name)
   - name: dockerhubAccount
     default: "bowdatadockerhub"
   - name: containerPort
