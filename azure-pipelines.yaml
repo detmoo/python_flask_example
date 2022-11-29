@@ -46,6 +46,8 @@ parameters:
   - name: containerPort
     default: 5000
 # application specific params
+  - name: appName
+    default: $(Build.Repository.Name)
   - name: hostPort
     default: 8000
 # Parameter Sets
