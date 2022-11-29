@@ -48,6 +48,8 @@ parameters:
 # application specific params
   - name: appName
     default: $(Build.Repository.Name)
+  - name: buildTag
+    default: $(Build.BuildId)
   - name: hostPort
     default: 8000
 # Parameter Sets
