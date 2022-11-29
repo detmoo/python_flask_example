@@ -45,12 +45,14 @@ parameters:
     default: "bowdatadockerhub"
   - name: containerPort
     default: 5000
+# application specific params
   - name: hostPort
     default: 8000
 # Parameter Sets
   - name: _ignore_params
     type: object
     default:
+      - dockerRunCommand
       - dockerRunPostSteps
   - name: _general_params
     type: object
@@ -65,7 +67,6 @@ parameters:
       - azureDockerStageDependsOn
       - dockerhubServiceConnection
       - containerPort
-      - hostPort
       - containerRuntimeVariables
       - dockerhubAccount
       - dockerhubRepository
@@ -84,6 +85,7 @@ stages:
             ${{ each pair in parameters }}:
               ${{if and(or(containsValue(parameters._azure_docker_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
                 ${{pair.key}}: ${{pair.value}}
+            dockerRunCommand: "docker run --name ${{parameters.appName}} -d -p ${{parameters.hostPort}}:${{parameters.containerPort}} ${{parameters.appName}}:${{parameters.buildTag}}"
             dockerRunPostSteps:
 
               - script: |
