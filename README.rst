@@ -1,6 +1,8 @@
 bowdata.test.flask
 ===================
 
+This is a generic implementation of a server application and a RESTApi utilising the Flask/FlaskApi Blueprint pattern.
+The enclosed Dockerfile builds for deployment with Gunicorn. 
 
 
 
